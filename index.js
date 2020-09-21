@@ -11,17 +11,18 @@ function getGitHubInfo(userId) {
     .then((responseJson) => {
       console.log(responseJson); 
       displayResults(responseJson); 
-    });
+    }).catch( e => render( '<h1>User Not Found</h1>'));
 
 }
 
-
 const displayResults = (responseJson) => {
     console.log('the displayResults has ran');
-          for (key i in responseJson) {
-        
-      }
+    const toBeDisplayed = responseJson.reduce((finalDisplay, result) => {
+      //.name html_url
+      return finalDisplay += `<li><a href='${result.html_url}'>${result.name}</a></li>`
+    }, '')
 
+    render(toBeDisplayed);
 }
 
 // handler function for the submit button
@@ -45,7 +46,7 @@ function setHeaders() {
   };
 }
 
-const render = (template) => $('main').html(template); 
+const render = (template) => $('#results').html(template); 
 
 
 $(function () {
